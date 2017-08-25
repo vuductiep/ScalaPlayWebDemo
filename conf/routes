@@ -1,0 +1,30 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+
+GET     /                    controllers.HomeController.index()
+
+GET		/movieinfo/:mvid		controllers.HomeController.movieinfo(mvid: Int)
+POST 	/addMovieComment		controllers.HomeController.addMovieComment()
+
+GET		/userinfo				controllers.HomeController.userinfo()
+GET		/admin					controllers.HomeController.adminControl()
+
+GET		/searchMovie					controllers.HomeController.searchMovieControl()
+GET		/searchUser					controllers.HomeController.searchUserControl()
+
+GET		/LogoutUser				controllers.HomeController.LogoutUser()
+GET		/LoginFailed			controllers.HomeController.LoginFailed()
+GET 	/delete/:id				controllers.HomeController.deleteUser(id: Int)
+
+
+POST	/LoginUser				controllers.HomeController.LoginUser()
+POST	/SignupUser				controllers.HomeController.SignupUser()
+POST	/updateUserInfo			controllers.HomeController.updateUserInfo()
+POST  	/upload			      	    controllers.HomeController.upload()
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file    	    controllers.Assets.at(path="/public", file)
+
+

@@ -1,0 +1,108 @@
+@* movieinfo Template File *@
+@(user: models.User, mvdata : Seq[models.Movie], mvinfo : models.Movie, mvcomment : Seq[models.MovieComment]) 
+
+@import helper._
+
+@header(user.username, mvdata) 
+
+<div id="Mypage" class="tabcontent" >
+</div>
+	
+<div id="Login" class="tabcontent">
+  	<p></p> 
+  	<div class="login-page">
+  		@loginform()
+	</div>
+</div>
+
+<div id="Signup" class="tabcontent">
+  	<p></p>
+  	<div class="signup-page">
+  		@signupform()
+	</div>
+</div>
+
+<!-- This is movieinfo section -->
+<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/movieinfo.css")">
+
+<div id="mv-avatar">
+   <img src="@routes.Assets.at("images/movie-icon.png")" />
+</div>
+<div id="mv-summary">
+    <p style="padding-bottom:10px; padding-top:0px;">
+        <span id="mv-fullname">@mvinfo.title</span><br />
+    </p>
+  
+    <p>
+        <b>Movie Information</b>
+        <div id="mv-info">
+            Release: @mvinfo.release<br />
+            Genre: @mvinfo.genre<br />
+            <br />
+        </div>
+
+    </p>
+</div>
+<div id="mv-description">
+    <p>
+        <h3>Movies Description</h3>
+        No description</a>.
+    </p>
+</div>
+
+<div id="mv-user-comment">
+    <h3>Leave a comment</h3>
+    @if(user.username != ""){
+        <form id="user-comment-form" role="form" action='@routes.HomeController.addMovieComment()' method="post" autocomplete="off">
+		    <fieldset class="form">
+		    	<div class=commentform>
+			    	<input type="hidden" id="mvid" name="mvid" value="@mvinfo.id">
+			    	<input type="hidden" id="userid" name="userid" value="@user.id">
+			    	<input type="hidden" id="username" name="username" value="@user.username">
+			    	<input type="text" size=50 id="comment" name="comment" value="" placeholder="Write your comment here" required>
+			    </div>
+			    <div id="mainselection" class="ratingform">
+			    	<select id="rating" name="rating">
+			    		<option value="3">Rate it? OK? </option>
+						<option value="1">Terrible</option>
+						<option value="2">Bad</option>
+						<option value="3">Ok</option>
+						<option value="4">Good</option>
+						<option value="5">Fantastic</option>
+					</select>
+				</div>
+		        <div class="form-actions controls ynt-btn-xlarge">
+	            	<button type="submit" class="btn btn-primary ynt-btn-orange">Subtmit Comment</button>
+	            </div>
+		    </fieldset>
+		</form>
+	} else {
+		<p class="message">You are not logged in? 
+				<a href="#" onclick="openCity(event, 'Login')">Sign in</a>, or
+				<a href="#" onclick="openCity(event, 'Signup')">Create an account</a>
+		</p>
+	}
+    <h3>User Comment</h3>
+	<fieldset>
+        <table cellspacing="20">
+            <tr>
+                <th>User</th>
+                <th>Comment</th>
+                <th>Rating</th>
+            </tr>
+            @for(mvcmt <- mvcomment){
+            <tr>
+                <td>@mvcmt.username</td>
+                <td>@mvcmt.comment</td>
+                <td>
+                	  <div class="rating-bar">
+					    <div class="rate-@mvcmt.rating">
+					      <span class="animate gold"></span>
+					    </div>
+					  </div>
+				</td>
+            </tr>
+            }
+        </table>
+    </fieldset>
+</div>

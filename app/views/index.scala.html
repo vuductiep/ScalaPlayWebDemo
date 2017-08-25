@@ -1,0 +1,30 @@
+@(user: models.User, mvdata : Seq[models.Movie]) 
+
+@import helper._
+
+@header(user.username, mvdata) 
+
+<div id="Mypage" class="tabcontent" >
+</div>
+	
+<div id="Login" class="tabcontent">
+  	<p></p> 
+  	<div class="login-page">
+  		@loginform()
+	</div>
+</div>
+
+<div id="Signup" class="tabcontent">
+  	<p></p>
+  	<div class="signup-page">
+  		@signupform()
+	</div>
+</div>
+
+
+<script type="text/javascript" charset="utf-8">
+	//document.getElementById("tabMyPage").click();
+	document.getElementById("tabMovie").click();
+</script>
+
+

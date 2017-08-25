@@ -1,0 +1,101 @@
+@* tabcode Template File *@
+@()
+
+<h1 align=center> Welcome! </h1>
+<h3 align=center> Begin by click on a tab </h3>
+<div class="tab">
+  <button class="tablinks" onclick="openCity(event, 'Movie')">Browse Movie</button>
+  <button class="tablinks" onclick="openCity(event, 'Mypage')">My Page</button>
+  <button class="tablinks" onclick="openCity(event, 'Signup')">Sign Up</button>
+</div>
+
+<div id="Movie" class="tabcontent">
+  <h3>London</h3>
+  <p>London is the capital city of England.</p>
+ 
+  
+		<table>
+		  <tr>
+		    <th>id</th>
+		    <th>Title</th>
+			<th>Release</th>
+			<th>Genre</th>
+			<th>Comment</th>
+		  </tr>
+		  
+		  @for(index <- 1 until 10){
+			<tr>
+				<td>@index</td>
+				<td>@index</td>
+				<td>@index</td>
+				<td>@index</td>
+				<td>@index</td>
+			</tr>
+		  }
+		  
+		  <tr>
+		    <td>$0</td>
+		    <td>Dummy Name</td>
+			<td>1900</td>
+			<td>Action|Comedy</td>
+			<td>It is good!</td>
+		  </tr>
+		  <tr>
+		    <td>February</td>
+		    <td>$80</td>
+		  </tr>
+		</table>
+
+	</div>
+	
+	<div id="Mypage" class="tabcontent">
+  	<p></p> 
+  	<div class="login-page">
+  	  <div class=form>
+	    <form class="login-form">
+	      <input type="text" placeholder="username"/>
+	      <input type="password" placeholder="password"/>
+	      <button>login</button>
+	      <p class="message">Not registered? <a href="#" onclick="openCity(event, 'Signup')">Create an account</a></p>
+	    </form>
+	  </div>
+	</div>
+</div>
+
+<div id="Signup" class="tabcontent">
+  	<p></p>
+  	<div class="signup-page">
+	  	<div class="form">
+		    <form class="register-form">
+		      <input type="text" placeholder="name"/>
+		      <input type="password" placeholder="password"/>
+		      <input type="text" placeholder="email address"/>
+		      <button>create</button>
+		      <p class="message">Already registered? <a href="#" onclick="openCity(event, 'Mypage')">Sign In</a></p>
+		    </form>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript" charset="utf-8">
+    function openCity(evt, tabName) {
+	    // Declare all variables
+	    var i, tabcontent, tablinks;
+	
+	    // Get all elements with class="tabcontent" and hide them
+	    tabcontent = document.getElementsByClassName("tabcontent");
+	    for (i = 0; i < tabcontent.length; i++) {
+	        tabcontent[i].style.display = "none";
+	    }
+	
+	    // Get all elements with class="tablinks" and remove the class "active"
+	    tablinks = document.getElementsByClassName("tablinks");
+	    for (i = 0; i < tablinks.length; i++) {
+	        tablinks[i].className = tablinks[i].className.replace(" active", "");
+	    }
+	
+	    // Show the current tab, and add an "active" class to the button that opened the tab
+	    document.getElementById(tabName).style.display = "block";
+	    evt.currentTarget.className += " active";
+	}
+</script>

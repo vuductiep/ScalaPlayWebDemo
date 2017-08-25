@@ -1,0 +1,13 @@
+@* loginform Template File *@
+@()
+
+<form id="user-login-form" role="form" action='@routes.HomeController.LoginUser()' method="post" class="form-horizontal" align="center" autocomplete="off">
+    <fieldset class="user-login form">
+    	<input type="text" id="username" name="username" value="" placeholder="Username" class="form-control input-lg" required>
+        <input type="password" id="passwd" name="passwd" value="" placeholder="Password" class="form-control input-lg" required>
+        <div class="form-actions controls ynt-btn-xlarge">
+            <button type="submit" class="btn btn-primary ynt-btn-orange">Login</button>
+        </div>
+        <p class="message">Not registered? <a href="#" onclick="openCity(event, 'Signup')">Create an account</a></p>
+    </fieldset>
+</form>

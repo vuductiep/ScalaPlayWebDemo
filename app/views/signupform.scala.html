@@ -1,0 +1,17 @@
+@* signupform Template File *@
+@()
+
+<form id="user-signup-form" role="form" action='@routes.HomeController.SignupUser()' method="post" class="form-horizontal" align="center" autocomplete="off">
+    <fieldset class="user-signup form">
+    	<input type="text" id="username" name="username" value="" placeholder="Username" class="form-control input-lg" required>
+        <input type="password" id="passwd" name="passwd" value="" placeholder="Password" class="form-control input-lg" required>
+        <input type="text" placeholder="fullname" name="fullname" value="" placeholder="Your Full Name" class="form-control input-lg" required/>
+        <input type="text" placeholder="mobile" name="mobile" value="" placeholder="Your mobile number" class="form-control input-lg" required/>
+        <input type="text" placeholder="email address" name="email" value="" placeholder="Your email" class="form-control input-lg" required/>
+		<input type="date" placeholder="Date of birth" name="dob" value="" class="form-control input-lg" required>	
+        <div class="form-actions controls ynt-btn-xlarge">
+            <button type="submit" class="btn btn-primary ynt-btn-orange">Sign Up</button>
+        </div>
+        <p class="message">Already registered? <a href="#" onclick="openCity(event, 'Mypage')">Sign In</a></p>
+    </fieldset>
+</form>

@@ -1,0 +1,115 @@
+@* admin Template File *@
+@(user: models.User, mvdata : Seq[models.Movie], allusers : Seq[models.User])
+
+
+@header(user.username, mvdata) 
+
+<div id="Mypage" class="tabcontent" >
+</div>
+
+<div>
+   <p>
+   	<fieldset class="filter1">
+   	<legend align="center"><h3>Filter user</h3></legend>
+	<form id="user-search-form" role="form" action='@routes.HomeController.searchUserControl()' method="get" align="left">
+		
+	    <div class="form-actions controls ynt-btn-xlarge">
+	    	<input type="hidden"" id="searchdb" name="searchdb" value="userdb">
+	    	<input type="text" id="searchbox" name="searchterm" placeholder="Name" value="">
+	        <button type="submit" class="btn btn-primary ynt-btn-orange">Search</button>
+	    </div>
+	</form>
+	</field>
+   </p>
+</div>
+
+<div id="userinfoModify" class="userModifier" align="center">
+    <p>
+	<fieldset>
+		<legend align="center"><h3 id="editUserInfo" >Modify User infomation</h3></legend>
+		<form id="change-info-form" role="form" action='@routes.HomeController.updateUserInfo()' method="post" class="form-horizontal" autocomplete="off">
+		    <fieldset class="change-pass form">
+		    	<input type="hidden" id="userid" name="id" value=""  class="form-control input-lg" >
+		    	<label for="username">Username</label>
+		    	<input type="text" id="username" name="username" value=""  class="form-control input-lg" readonly>
+		    	<label for="passwd">Password</label>
+		    	<input type="password" id="passwd" name="passwd" value=""  class="form-control input-lg" >	
+		    	<label for="fullname">Fullname</label>
+		        <input type="text" id="fullname" name="fullname" value="" placeholder="Your Full Name" class="form-control input-lg">
+		        <label for="mobile">Mobile</label>
+		        <input type="text" id="mobile" name="mobile" value="" placeholder="Your mobile number" class="form-control input-lg">
+		        <label for="email">Email</label>
+		        <input type="text" id="email" name="email" value="" placeholder="Your email" class="form-control input-lg">
+		        <label for="dob">Date of birth</label>
+				<input type="date" id="dob" name="dob" value="" class="form-control input-lg" >	
+		        <div class="form-actions controls ynt-btn-xlarge">
+		            <button id="userinfoModifyButton" type="submit" class="btn btn-primary ynt-btn-orange">Submit</button>
+		        </div>
+		    </fieldset>
+		</form>
+	</fieldset>
+    </p>
+</div>
+
+<div>
+    <p>
+	<fieldset>
+        <legend id="searchResult" align="center"><h3>Search Results</h3></legend>
+        <table cellspacing="20">
+            <tr>
+                <th>id</th>
+                <th>Username</th>
+                <th>Password</th>
+                <th>Fullname</th>
+                <th>Mobile</th>
+                <th>Email</th>
+                <th>Date of Birth</th>
+                <th>Action</th>
+            </tr>
+            @for(user1 <- allusers){
+            <tr>
+                <td id="id@user1.id" >@user1.id</td>
+                <td id="username@user1.id">@user1.username</td>
+                <td id="pass@user1.id">@user1.passwd</td>
+                <td id="name@user1.id">@user1.fullname</td>
+                <td id="mobile@user1.id">@user1.mobile</td>
+                <td id="email@user1.id">@user1.email</td>
+                <td id="dob@user1.id">@user1.dob</td>
+                <td> 
+                	<a href="#" onclick="return openEditUser(@user1.id);">Edit</a>
+                	<a href="@routes.HomeController.deleteUser(user1.id)">Delete</a> 
+                </td>
+            </tr>
+            }
+        </table>
+    </fieldset>
+    </p>
+</div>
+
+<script type="text/javascript" charset="utf-8">
+	// Hide the user edit form
+	document.getElementById("userinfoModify").style.display = "none"
+	function openEditUser(userid){
+		//alert("Edit user " + userid)
+		//Show the user edit form
+		document.getElementById("userinfoModify").style.display = "block"
+
+		var username = document.getElementById("username"+userid).innerHTML
+		var pass = document.getElementById("pass"+userid).innerHTML
+		var name = document.getElementById("name"+userid).innerHTML
+		var mobile = document.getElementById("mobile"+userid).innerHTML
+		var email = document.getElementById("email"+userid).innerHTML
+		var dob = document.getElementById("dob"+userid).innerHTML
+
+		document.getElementById("userid").value = userid
+		document.getElementById("username").value = username
+		document.getElementById("passwd").value = pass
+		document.getElementById("fullname").value = name
+		document.getElementById("mobile").value = mobile
+		document.getElementById("email").value = email
+		document.getElementById("dob").value = dob
+
+		document.getElementById("editUserInfo").innerHTML = "Modifying " + username + " information"	
+
+	}
+</script>

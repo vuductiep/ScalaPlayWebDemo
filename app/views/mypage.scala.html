@@ -1,0 +1,142 @@
+@* mypage Template File *@
+@(userinfo: models.User)
+
+<!-- This is userinfo section -->
+
+<div id="mv-avatar">
+   	<img src="@routes.Assets.at("picture/" +userinfo.username +".png")" alt="Profile Picture" />
+</div>
+
+<div id="mv-summary">
+    <p style="padding-bottom:10px; padding-top:0px;">
+        <span id="mv-fullname">@userinfo.fullname</span><br />
+    </p>
+  
+    <p>
+        <b>User Information</b>
+        <div id="mv-info">
+            Mobile: @userinfo.mobile<br />
+            Email: @userinfo.email<br />
+        	Date of Birth: @userinfo.dob<br />
+            <br />
+        </div>
+    </p>
+</div>
+<div id="mv-description">
+    <p>
+        <h3>Self Introduction</h3>
+        Upload a new profile picture</a>.
+    </p>
+	@helper.form(action = routes.HomeController.upload(), 'enctype -> "multipart/form-data") {
+	    <input type="file" name="picture">
+	    <p>
+	        <input type="submit" >
+	    </p>
+	}
+</div>
+
+
+<div id="mv-user-comment">
+    <p>
+      	<button id="changePass" type="button" class="changepass" onclick="openModifier(event, 'passModify')"=>Change Password</button>
+<!--
+      	<button id="updateAvatar" type="button" class="updateinfo" onclick="openModifier(event, 'avatarModify')">New Avatar</button>
+-->
+      	<button id="updateInfo" type="button" class="updateinfo" onclick="openModifier(event, 'userinfoModify')">Update Information</button>
+    </p>
+</div>
+
+<div id="userinfoModify" class="userModifier" align="center">
+	<form id="change-info-form" role="form" action='@routes.HomeController.updateUserInfo()' method="post" class="form-horizontal" autocomplete="off">
+	    <fieldset class="change-pass form">
+	    	<input type="hidden" name="id" value="@userinfo.id"  class="form-control input-lg" >
+	    	<input type="hidden" name="username" value="@userinfo.username"  class="form-control input-lg" >
+	    	<input type="hidden" name="passwd" value="@userinfo.passwd"  class="form-control input-lg" >
+
+	    	<label for="fullname">Fullname</label>
+	        <input type="text" name="fullname" value="@userinfo.fullname" placeholder="Your Full Name" class="form-control input-lg">
+	        <label for="mobile">Mobile</label>
+	        <input type="text" name="mobile" value="@userinfo.mobile" placeholder="Your mobile number" class="form-control input-lg">
+	        <label for="email">Email</label>
+	        <input type="text" name="email" value="@userinfo.email" placeholder="Your email" class="form-control input-lg">
+	        <label for="dob">Date of birth</label>
+			<input type="date" name="dob" value="@userinfo.dob" class="form-control input-lg" >	
+	        <div class="form-actions controls ynt-btn-xlarge">
+	            <button id="userinfoModifyButton" type="submit" class="btn btn-primary ynt-btn-orange">Submit</button>
+	        </div>
+	    </fieldset>
+    </form>
+</div>
+
+<div id="passModify" class="userModifier" align="center">
+	<fieldset class="change-pass form">
+		<input type="password" id="oldpass" name="oldpass" value="" placeholder="Current password" class="form-control input-lg" required>
+		<input type="password" id="newpass1" name="newpass1" value="" placeholder="New password" class="form-control input-lg" required>
+		<form id="change-pass-form" role="form" action='@routes.HomeController.updateUserInfo()' method="post" class="form-horizontal" autocomplete="off">
+			<input type="hidden" name="id" value="@userinfo.id"  class="form-control input-lg" >
+			<input type="hidden" name="username" value="@userinfo.username"  class="form-control input-lg" >
+			<input type="hidden" name="fullname" value="@userinfo.fullname" class="form-control input-lg" />
+			<input type="hidden" name="mobile" value="@userinfo.mobile" class="form-control input-lg" />
+			<input type="hidden" name="email" value="@userinfo.email" class="form-control input-lg" />
+			<input type="hidden" name="dob" value="@userinfo.dob" class="form-control input-lg" >	
+			
+			<input type="password" id="newpasswd" name="passwd" value="" placeholder="New password" class="form-control input-lg" required>
+	        <div class="form-actions controls ynt-btn-xlarge">
+	        	<button type="button" class="btn btn-primary ynt-btn-orange" onclick="checkOldPasswd()">Submit</button>
+	            <button id="passModifyButton" type="submit" hidden="hidden" class="btn btn-primary ynt-btn-orange">Dont click</button>
+	        </div>
+	    </form>
+	</fieldset>
+</div>
+
+
+
+<script type="text/javascript" charset="utf-8">
+	function checkOldPasswd() {
+		var currentpasswd = document.getElementById("oldpass").value
+		if (currentpasswd == @userinfo.passwd){
+			//alert("Current password is ok")
+			var newpasswd1 = document.getElementById("newpass1").value
+			var newpasswd2 = document.getElementById("newpasswd").value
+			if (newpasswd1 == "") {
+				alert("Please enter new password!")
+			}else if(newpasswd1 == newpasswd2) {
+				alert("Password will be changed now!")
+				document.getElementById("passModifyButton").click()
+			} else {
+				alert("New password doesn't match!")
+			}		
+		}else {
+			alert("Current password is wrong!!!")
+		}	
+	}
+
+	var modifier = document.getElementsByClassName("userModifier");
+    for (i = 0; i < modifier.length; i++) {
+        modifier[i].style.display = "none";
+    }
+	
+	function openModifier(evt, elementName) {
+
+	    var i, modifier;
+	
+	    // Show the current tab, and add an "active" class to the button that opened the tab
+	    if (document.getElementById(elementName).style.display == "block"){
+	    	document.getElementById(elementName).style.display = "none";
+	    	evt.currentTarget.className.replace(" active", "");
+	    	
+	    	modifier = document.getElementsByClassName("userModifier");
+		    for (i = 0; i < modifier.length; i++) {
+		        modifier[i].style.display = "none";
+		    }
+	    } else {
+	    	tabcontent = document.getElementsByClassName("userModifier");
+		    for (i = 0; i < tabcontent.length; i++) {
+		        tabcontent[i].style.display = "none";
+		    }
+	
+	    	document.getElementById(elementName).style.display = "block";
+	    	evt.currentTarget.className += " active";
+	    }
+	}
+</script>
